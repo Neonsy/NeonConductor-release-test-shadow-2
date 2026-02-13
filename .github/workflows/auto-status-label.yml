@@ -1,0 +1,43 @@
+name: Auto status label
+
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  add-default-status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+        with:
+          script: |
+            const issuePayload = context.payload.issue;
+            const prPayload = context.payload.pull_request;
+            const itemNumber = issuePayload?.number ?? prPayload?.number;
+            const labels = (issuePayload?.labels ?? prPayload?.labels ?? []).map((label) =>
+              typeof label === "string" ? label : label.name
+            );
+
+            const hasStatusLabel = labels.some((name) => name.startsWith("status:"));
+            if (hasStatusLabel) {
+              core.info("Item already has a status label. Skipping auto-assignment.");
+              return;
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: itemNumber,
+              labels: ["status: needs-triage"],
+            });
+            core.info("Applied status: needs-triage.");
