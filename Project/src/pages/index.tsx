@@ -1,85 +1,63 @@
-const focusStreams = [
+const boardNotes = [
     {
-        name: 'Build Signal',
-        detail: 'One timeline for compile health, tests, and artifact freshness.',
+        tag: 'Build',
+        title: 'Artifact Stamp',
+        detail: 'RC-27 signed and mirrored to the verification lane.',
     },
     {
-        name: 'Risk Radar',
-        detail: 'Flags regressions before promotion reaches the release lane.',
+        tag: 'Quality',
+        title: 'Smoke Sweep',
+        detail: 'Desktop installer run completed on Windows and macOS.',
     },
     {
-        name: 'Ops Brief',
-        detail: 'Keeps decisions and blockers visible for the next handoff.',
-    },
-];
-
-const releaseQueue = [
-    {
-        slot: '18:00 UTC',
-        task: 'Cut release candidate and freeze dependency updates.',
-    },
-    {
-        slot: '19:30 UTC',
-        task: 'Run smoke suite on signed desktop installers.',
-    },
-    {
-        slot: '21:00 UTC',
-        task: 'Promote to stable if no crash spike is detected.',
+        tag: 'Release',
+        title: 'Promotion Gate',
+        detail: 'Stable push opens after crash feed stays flat for 30 minutes.',
     },
 ];
 
-const detailChips = ['Dark command surface', 'Neon risk visibility', 'Minimal release copy'];
+const checkpoints = [
+    { time: '18:00 UTC', action: 'Freeze dependency bumps' },
+    { time: '19:20 UTC', action: 'Run signed installer pass' },
+    { time: '20:45 UTC', action: 'Review crash and telemetry deltas' },
+    { time: '21:00 UTC', action: 'Approve or hold stable lane' },
+];
 
 export default function HomePage() {
     return (
-        <main className='relative flex w-full flex-1 items-center justify-center overflow-hidden bg-[#04050c] px-4 py-8 sm:px-6 lg:px-10'>
-            <div aria-hidden className='neon-grid' />
-            <div aria-hidden className='neon-orb neon-orb-cyan' />
-            <div aria-hidden className='neon-orb neon-orb-pink' />
-
-            <section className='neon-shell'>
-                <header>
-                    <p className='neon-kicker'>NeonConductor</p>
-                    <h1 className='neon-title'>Signal Deck</h1>
-                    <p className='neon-copy'>
-                        A stripped release index for teams that want the current picture in seconds. No dashboards to
-                        decode, no buried status notes.
+        <main className='ledger-wrap'>
+            <div aria-hidden className='ledger-texture' />
+            <section className='ledger-board'>
+                <header className='ledger-header'>
+                    <p className='ledger-kicker'>NeonConductor Daily</p>
+                    <h1 className='ledger-title'>Release Wall</h1>
+                    <p className='ledger-copy'>
+                        This index is intentionally redesigned to be obvious in hot reload. If you can see this paper
+                        board layout, your updates are working.
                     </p>
-
-                    <div className='mt-4 flex flex-wrap gap-2'>
-                        {detailChips.map((chip) => (
-                            <span key={chip} className='neon-chip'>
-                                {chip}
-                            </span>
-                        ))}
-                    </div>
                 </header>
 
-                <div className='mt-7 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]'>
-                    <article className='neon-panel'>
-                        <h2 className='neon-panel-title'>Core Streams</h2>
-                        <ul className='mt-3 space-y-3'>
-                            {focusStreams.map((stream) => (
-                                <li key={stream.name} className='neon-list-item'>
-                                    <p className='neon-label'>{stream.name}</p>
-                                    <p className='neon-muted'>{stream.detail}</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </article>
-
-                    <article className='neon-panel'>
-                        <h2 className='neon-panel-title'>Tonight Queue</h2>
-                        <ol className='mt-3 space-y-3'>
-                            {releaseQueue.map((item) => (
-                                <li key={item.slot} className='neon-list-item'>
-                                    <p className='neon-label'>{item.slot}</p>
-                                    <p className='neon-muted'>{item.task}</p>
-                                </li>
-                            ))}
-                        </ol>
-                    </article>
+                <div className='ledger-grid'>
+                    {boardNotes.map((note) => (
+                        <article key={note.title} className='ledger-note'>
+                            <span className='ledger-note-tag'>{note.tag}</span>
+                            <h2 className='ledger-note-title'>{note.title}</h2>
+                            <p className='ledger-note-copy'>{note.detail}</p>
+                        </article>
+                    ))}
                 </div>
+
+                <article className='ledger-timeline'>
+                    <h2 className='ledger-timeline-title'>Shift Timeline</h2>
+                    <ol className='ledger-steps'>
+                        {checkpoints.map((item) => (
+                            <li key={item.time} className='ledger-step'>
+                                <span className='ledger-time'>{item.time}</span>
+                                <span className='ledger-action'>{item.action}</span>
+                            </li>
+                        ))}
+                    </ol>
+                </article>
             </section>
         </main>
     );
