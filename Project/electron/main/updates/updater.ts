@@ -182,15 +182,13 @@ async function configureFeedForChannel(channel: UpdateChannel, options: Configur
             resolvedFeedCache[channel] = feedConfig;
         }
 
-        if (!feedConfig) {
-            throw new Error('Resolved feed config is unavailable.');
-        }
+        const resolvedFeed = feedConfig;
 
-        console.info(`[updater][resolver] channel=${channel} tag=${feedConfig.tag} feed=${feedConfig.feedBaseUrl}`);
+        console.info(`[updater][resolver] channel=${channel} tag=${resolvedFeed.tag} feed=${resolvedFeed.feedBaseUrl}`);
 
         autoUpdater.setFeedURL({
             provider: 'generic',
-            url: feedConfig.feedBaseUrl,
+            url: resolvedFeed.feedBaseUrl,
             channel: toUpdaterChannel(channel),
         });
 
@@ -378,7 +376,7 @@ export async function switchChannel(channel: UpdateChannel): Promise<SwitchChann
             forceRefresh: true,
             applyResolvedChannel: false,
         });
-    } catch (error) {
+    } catch {
         updateSwitchStatus({
             phase: 'error',
             channel: currentChannel,

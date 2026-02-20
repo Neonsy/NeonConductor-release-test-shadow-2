@@ -20,12 +20,14 @@ function createOptions(
     return {
         owner: 'Neonsy',
         repo: 'NeonConductor-release-test-shadow-2',
-        fetchImpl: vi.fn(async () => {
-            return new Response(JSON.stringify(releases), {
-                status,
-                headers,
-            });
-        }),
+        fetchImpl: vi.fn(() =>
+            Promise.resolve(
+                new Response(JSON.stringify(releases), {
+                    status,
+                    headers,
+                })
+            )
+        ),
     };
 }
 
