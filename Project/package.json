@@ -1,7 +1,7 @@
 {
     "name": "neon-conductor",
     "private": true,
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "AI agent manager with OpenRouter integration and BYOK support.",
     "homepage": "https://github.com/Neonsy/NeonConductor-release-test-shadow-2",
     "packageManager": "pnpm@10.30.0",
