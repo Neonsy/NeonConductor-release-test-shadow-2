@@ -1,83 +1,109 @@
-const focusStreams = [
+const releaseTrack = [
     {
-        name: 'Build Signal',
-        detail: 'One timeline for compile health, tests, and artifact freshness.',
+        label: 'Candidate Cut',
+        window: '18:00 UTC',
+        detail: 'Freeze dependency drift and sign desktop bundles.',
     },
     {
-        name: 'Risk Radar',
-        detail: 'Flags regressions before promotion reaches the release lane.',
+        label: 'Smoke Window',
+        window: '19:20 UTC',
+        detail: 'Run launcher, update, and rollback checks on all channels.',
     },
     {
-        name: 'Ops Brief',
-        detail: 'Keeps decisions and blockers visible for the next handoff.',
-    },
-];
-
-const releaseQueue = [
-    {
-        slot: '18:00 UTC',
-        task: 'Cut release candidate and freeze dependency updates.',
-    },
-    {
-        slot: '19:30 UTC',
-        task: 'Run smoke suite on signed desktop installers.',
-    },
-    {
-        slot: '21:00 UTC',
-        task: 'Promote to stable if no crash spike is detected.',
+        label: 'Promotion Gate',
+        window: '21:00 UTC',
+        detail: 'Move to stable only when crash slope stays flat for one hour.',
     },
 ];
 
-const detailChips = ['Dark command surface', 'Neon risk visibility', 'Minimal release copy'];
+const integrityChecks = [
+    {
+        title: 'Build Integrity',
+        detail: 'Artifact hash and notarization consistency across targets.',
+    },
+    {
+        title: 'Runtime Safety',
+        detail: 'CSP, navigation guards, and update signature verification.',
+    },
+    {
+        title: 'Operational Hand-off',
+        detail: 'Support notes, rollout channel plan, and issue ownership.',
+    },
+];
+
+const dispatchNotes = [
+    'Escalations route to release captain first, then incident owner.',
+    'Scope shifts after candidate cut require explicit rollback coverage.',
+    'Production notes must be posted before the promotion gate opens.',
+];
+
+const surfaceTags = ['Editorial layout', 'Warm control room palette', 'Fast scan hierarchy'];
 
 export default function HomePage() {
     return (
-        <main className='relative flex w-full flex-1 items-center justify-center overflow-hidden bg-[#04050c] px-4 py-8 sm:px-6 lg:px-10'>
-            <div aria-hidden className='neon-grid' />
-            <div aria-hidden className='neon-orb neon-orb-cyan' />
-            <div aria-hidden className='neon-orb neon-orb-pink' />
+        <main className='dispatch-site'>
+            <div aria-hidden className='dispatch-glow dispatch-glow-left' />
+            <div aria-hidden className='dispatch-glow dispatch-glow-right' />
+            <div aria-hidden className='dispatch-grain' />
 
-            <section className='neon-shell'>
-                <header>
-                    <p className='neon-kicker'>NeonConductor</p>
-                    <h1 className='neon-title'>Signal Deck</h1>
-                    <p className='neon-copy'>
-                        A stripped release index for teams that want the current picture in seconds. No dashboards to
-                        decode, no buried status notes.
+            <section className='dispatch-shell'>
+                <header className='dispatch-hero'>
+                    <p className='dispatch-kicker'>NeonConductor / Dispatch Index</p>
+                    <h1 className='dispatch-title'>Release direction without dashboard drag.</h1>
+                    <p className='dispatch-copy'>
+                        A single-page command surface for preparing, validating, and promoting desktop releases with
+                        minimal noise.
                     </p>
-
-                    <div className='mt-4 flex flex-wrap gap-2'>
-                        {detailChips.map((chip) => (
-                            <span key={chip} className='neon-chip'>
+                    <div className='dispatch-chip-row'>
+                        {surfaceTags.map((chip) => (
+                            <span key={chip} className='dispatch-chip'>
                                 {chip}
                             </span>
                         ))}
                     </div>
+                    <div className='dispatch-actions'>
+                        <button type='button' className='dispatch-button dispatch-button-primary'>
+                            Start Release Brief
+                        </button>
+                        <a className='dispatch-button dispatch-button-secondary' href='#release-track'>
+                            Jump to Track
+                        </a>
+                    </div>
                 </header>
 
-                <div className='mt-7 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]'>
-                    <article className='neon-panel'>
-                        <h2 className='neon-panel-title'>Core Streams</h2>
-                        <ul className='mt-3 space-y-3'>
-                            {focusStreams.map((stream) => (
-                                <li key={stream.name} className='neon-list-item'>
-                                    <p className='neon-label'>{stream.name}</p>
-                                    <p className='neon-muted'>{stream.detail}</p>
+                <div className='dispatch-grid'>
+                    <article id='release-track' className='dispatch-panel'>
+                        <h2 className='dispatch-panel-title'>Release Track</h2>
+                        <ol className='dispatch-list'>
+                            {releaseTrack.map((step) => (
+                                <li key={step.label} className='dispatch-list-item'>
+                                    <p className='dispatch-item-label'>{step.label}</p>
+                                    <p className='dispatch-item-window'>{step.window}</p>
+                                    <p className='dispatch-item-detail'>{step.detail}</p>
+                                </li>
+                            ))}
+                        </ol>
+                    </article>
+
+                    <article className='dispatch-panel'>
+                        <h2 className='dispatch-panel-title'>Integrity Checks</h2>
+                        <ul className='dispatch-list'>
+                            {integrityChecks.map((item) => (
+                                <li key={item.title} className='dispatch-list-item'>
+                                    <p className='dispatch-item-label'>{item.title}</p>
+                                    <p className='dispatch-item-detail'>{item.detail}</p>
                                 </li>
                             ))}
                         </ul>
                     </article>
 
-                    <article className='neon-panel'>
-                        <h2 className='neon-panel-title'>Tonight Queue</h2>
-                        <ol className='mt-3 space-y-3'>
-                            {releaseQueue.map((item) => (
-                                <li key={item.slot} className='neon-list-item'>
-                                    <p className='neon-label'>{item.slot}</p>
-                                    <p className='neon-muted'>{item.task}</p>
-                                </li>
+                    <article className='dispatch-panel dispatch-panel-wide'>
+                        <h2 className='dispatch-panel-title'>Handoff Notes</h2>
+                        <ul className='dispatch-note-list'>
+                            {dispatchNotes.map((note) => (
+                                <li key={note}>{note}</li>
                             ))}
-                        </ol>
+                        </ul>
                     </article>
                 </div>
             </section>
