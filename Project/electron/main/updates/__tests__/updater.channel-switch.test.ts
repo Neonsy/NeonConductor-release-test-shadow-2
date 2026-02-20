@@ -1,5 +1,4 @@
 import { EventEmitter } from 'node:events';
-
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 type UpdateChannel = 'stable' | 'beta' | 'alpha';
@@ -11,7 +10,7 @@ class MockAutoUpdater extends EventEmitter {
     autoInstallOnAppQuit = true;
 
     readonly setFeedURL = vi.fn();
-    readonly checkForUpdates = vi.fn(async () => null);
+    readonly checkForUpdates = vi.fn(() => Promise.resolve(null));
     readonly quitAndInstall = vi.fn();
 }
 
@@ -36,13 +35,13 @@ async function loadUpdaterHarness(options: {
 
     const resolverMock = vi.fn(
         options.resolverImpl ??
-            (async (channel: UpdateChannel) => {
+            ((channel: UpdateChannel) => {
                 const tag = channel === 'alpha' ? 'v1.2.3-alpha.7' : channel === 'beta' ? 'v1.2.3-beta.4' : 'v1.2.3';
-                return {
+                return Promise.resolve({
                     channel,
                     tag,
                     feedBaseUrl: `https://github.com/Neonsy/NeonConductor-release-test-shadow-2/releases/download/${tag}/`,
-                };
+                });
             })
     );
 
@@ -57,7 +56,7 @@ async function loadUpdaterHarness(options: {
                 getAllWindows: vi.fn(() => []),
             },
             dialog: {
-                showMessageBox: vi.fn(async () => ({ response: 0 })),
+                showMessageBox: vi.fn(() => Promise.resolve({ response: 0 })),
             },
         };
     });
@@ -65,8 +64,6 @@ async function loadUpdaterHarness(options: {
     vi.doMock('electron-store', () => {
         return {
             default: class MockStore {
-                constructor(_options?: unknown) {}
-
                 get(key: string): unknown {
                     return storeState[key];
                 }
