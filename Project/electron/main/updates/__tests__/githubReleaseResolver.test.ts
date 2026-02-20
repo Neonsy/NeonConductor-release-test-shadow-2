@@ -12,7 +12,11 @@ interface MockRelease {
     prerelease: boolean;
 }
 
-function createOptions(releases: MockRelease[], status = 200, headers: Record<string, string> = {}): ResolveLatestReleaseOptions {
+function createOptions(
+    releases: MockRelease[],
+    status = 200,
+    headers: Record<string, string> = {}
+): ResolveLatestReleaseOptions {
     return {
         owner: 'Neonsy',
         repo: 'NeonConductor-release-test-shadow-2',

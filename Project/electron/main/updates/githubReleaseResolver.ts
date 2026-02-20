@@ -63,7 +63,8 @@ function toRequestHeaders(token?: string): Record<string, string> {
 }
 
 function parseTagForChannel(tag: string, channel: UpdateChannel): ParsedChannelVersion | null {
-    const pattern = channel === 'stable' ? STABLE_TAG_PATTERN : channel === 'alpha' ? ALPHA_TAG_PATTERN : BETA_TAG_PATTERN;
+    const pattern =
+        channel === 'stable' ? STABLE_TAG_PATTERN : channel === 'alpha' ? ALPHA_TAG_PATTERN : BETA_TAG_PATTERN;
     const match = pattern.exec(tag);
 
     if (!match) {

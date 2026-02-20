@@ -64,3 +64,175 @@ body {
     background: rgba(139, 92, 246, 0.4);
     color: white;
 }
+
+@keyframes neon-drift {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(1.75rem, -1.25rem, 0) scale(1.06);
+    }
+}
+
+@keyframes neon-pulse {
+    0%,
+    100% {
+        box-shadow:
+            inset 0 0 0 1px rgba(112, 230, 255, 0.14),
+            0 0 0 1px rgba(112, 230, 255, 0.06),
+            0 0 56px rgba(0, 209, 255, 0.16);
+    }
+    50% {
+        box-shadow:
+            inset 0 0 0 1px rgba(112, 230, 255, 0.22),
+            0 0 0 1px rgba(112, 230, 255, 0.12),
+            0 0 78px rgba(0, 209, 255, 0.28);
+    }
+}
+
+.neon-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(to right, rgba(70, 106, 148, 0.16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(70, 106, 148, 0.16) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(circle at center, black 8%, transparent 80%);
+}
+
+.neon-orb {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    filter: blur(58px);
+    opacity: 0.62;
+    animation: neon-drift 16s ease-in-out infinite;
+}
+
+.neon-orb-cyan {
+    top: -22%;
+    left: -12%;
+    width: min(58vw, 680px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(0, 235, 255, 0.36) 0%, rgba(0, 235, 255, 0) 66%);
+}
+
+.neon-orb-pink {
+    right: -16%;
+    bottom: -28%;
+    width: min(56vw, 620px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(255, 83, 201, 0.28) 0%, rgba(255, 83, 201, 0) 66%);
+    animation-delay: -7s;
+}
+
+.neon-shell {
+    position: relative;
+    width: min(100%, 980px);
+    border-radius: 28px;
+    border: 1px solid rgba(92, 129, 180, 0.36);
+    background: linear-gradient(160deg, rgba(12, 18, 34, 0.94) 0%, rgba(7, 10, 24, 0.9) 100%);
+    padding: clamp(1.15rem, 2.5vw, 2rem);
+    box-shadow:
+        inset 0 0 0 1px rgba(112, 230, 255, 0.1),
+        0 28px 95px rgba(0, 0, 0, 0.72),
+        0 0 95px rgba(0, 209, 255, 0.14);
+    animation: neon-pulse 7s ease-in-out infinite;
+}
+
+.neon-kicker {
+    display: inline-flex;
+    margin: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(132, 183, 255, 0.42);
+    padding: 0.34rem 0.78rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c9f8ff;
+    background: rgba(10, 20, 39, 0.72);
+}
+
+.neon-title {
+    margin: 0.6rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 7vw, 4.1rem);
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    color: #ebf9ff;
+    text-shadow:
+        0 0 18px rgba(0, 217, 255, 0.45),
+        0 0 48px rgba(0, 217, 255, 0.18);
+}
+
+.neon-copy {
+    margin: 0.95rem 0 0;
+    max-width: 56ch;
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+    line-height: 1.6;
+    color: rgba(220, 237, 255, 0.8);
+}
+
+.neon-chip {
+    border-radius: 999px;
+    border: 1px solid rgba(117, 155, 212, 0.4);
+    padding: 0.34rem 0.68rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a9eaff;
+    background: rgba(7, 16, 33, 0.82);
+    box-shadow: 0 0 20px rgba(0, 194, 255, 0.12);
+}
+
+.neon-panel {
+    border-radius: 18px;
+    border: 1px solid rgba(93, 126, 177, 0.42);
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(11, 20, 39, 0.88) 0%, rgba(8, 13, 27, 0.82) 100%);
+}
+
+.neon-panel-title {
+    margin: 0;
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9be7ff;
+}
+
+.neon-list-item {
+    border-radius: 12px;
+    border: 1px solid rgba(110, 146, 201, 0.34);
+    padding: 0.72rem 0.78rem;
+    background: rgba(8, 17, 34, 0.82);
+}
+
+.neon-label {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #e6f8ff;
+}
+
+.neon-muted {
+    margin: 0.32rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.52;
+    color: rgba(193, 218, 246, 0.8);
+}
+
+@media (max-width: 640px) {
+    .neon-shell {
+        border-radius: 20px;
+        padding: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .neon-shell,
+    .neon-orb {
+        animation: none;
+    }
+}
