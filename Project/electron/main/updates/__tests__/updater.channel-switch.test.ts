@@ -37,8 +37,7 @@ async function loadUpdaterHarness(options: {
     const resolverMock = vi.fn(
         options.resolverImpl ??
             (async (channel: UpdateChannel) => {
-                const tag =
-                    channel === 'alpha' ? 'v1.2.3-alpha.7' : channel === 'beta' ? 'v1.2.3-beta.4' : 'v1.2.3';
+                const tag = channel === 'alpha' ? 'v1.2.3-alpha.7' : channel === 'beta' ? 'v1.2.3-beta.4' : 'v1.2.3';
                 return {
                     channel,
                     tag,

@@ -210,7 +210,10 @@ async function configureFeedForChannel(channel: UpdateChannel, options: Configur
     }
 }
 
-async function checkForUpdatesForSelectedChannel(channel: UpdateChannel, options: ConfigureFeedOptions = {}): Promise<void> {
+async function checkForUpdatesForSelectedChannel(
+    channel: UpdateChannel,
+    options: ConfigureFeedOptions = {}
+): Promise<void> {
     await configureFeedForChannel(channel, {
         forceRefresh: options.forceRefresh ?? true,
         applyResolvedChannel: options.applyResolvedChannel ?? true,
